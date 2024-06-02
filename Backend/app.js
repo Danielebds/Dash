@@ -11,7 +11,7 @@ const upload = multer({ dest: 'uploads/' });
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 8080;
+const port = 3306;
 
 const db = mysql2.createConnection({
     host: process.env.host,
