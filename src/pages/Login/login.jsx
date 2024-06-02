@@ -47,14 +47,12 @@ const Login = () => {
             </Link>
           </div>
           <div>
-            <TERipple rippleColor="light" className="w-full">
-              <button
-                type="button"
-                className="w-full py-2 text-white bg-blue-500 rounded-md shadow-sm font-semibold text-lg transition duration-150 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                <Link to="/dashboard">Entrar</Link>
-              </button>
-            </TERipple>
+            <button
+              type="button"
+              className="w-full py-2 text-white bg-blue-500 rounded-md shadow-sm font-semibold text-lg transition duration-150 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <Link to="/dashboard">Entrar</Link>
+            </button>
           </div>
           <div className="text-center">
             <button>
