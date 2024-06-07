@@ -1,6 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { TEInput, TERipple } from "tw-elements-react";
+import { Link } from "react-router-dom";
+import { TEInput } from "tw-elements-react";
 
 const Login = () => {
   return (
