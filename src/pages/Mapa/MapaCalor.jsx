@@ -30,7 +30,6 @@ const ComponenteMapaCalor = () => {
     [-8.0167, -34.8833, 1000],
     // Adicione mais pontos conforme necessário
   ];
-
   return (
     <>
       <Link to="/dashboard" className="fixed top-1 left-1 bg-gray-800 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-gray-700">
