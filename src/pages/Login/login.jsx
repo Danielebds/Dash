@@ -1,7 +1,30 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { TEInput } from "tw-elements-react";
+import useAuth from "../hooks/useAuth";
+import { MdEmail } from "react-icons/md";
 
 const Login = () => {
+  const { signin } = useAuth();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+
+  const handlelogin = () => {
+    if (!email || !senha) {
+      setError("Preencha todos os campos");
+      return;
+    }
+    const res = signin(email, senha);
+    if (res) {
+      setError(res);
+      return;
+    }
+    navigate("/dashboard");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-2000">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
@@ -17,8 +40,10 @@ const Login = () => {
               Login
             </label>
             <TEInput
-              type="text"
-              id="login"
+              type="email"
+              placeholder="Digite seu Email"
+              value={email}
+              onChange={(e) => [setEmail(e.target.value), setError("")]}
               className="w-full mt-1 border border-blue-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               style={{ color: "black" }}
             />
@@ -32,10 +57,13 @@ const Login = () => {
             </label>
             <TEInput
               type="password"
-              id="password"
+              placeholder="Digite sua Senha"
+              value={senha}
               className="w-full mt-1 border border-blue-500 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               style={{ color: "black" }}
+              onChange={(e) => [setSenha(e.target.value), setError("")]}
             />
+            {error && <span className="text-red-500">{error}</span>}
           </div>
           <div className="flex items-center justify-between">
             <Link
@@ -49,19 +77,18 @@ const Login = () => {
             <button
               type="button"
               className="w-full py-2 text-white bg-blue-500 rounded-md shadow-sm font-semibold text-lg transition duration-150 ease-in-out hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              onClick={handlelogin}
             >
-              <Link to="/dashboard">Entrar</Link>
+              Entrar
             </button>
           </div>
           <div className="text-center">
-            <button>
-              <Link
-                to="/register"
-                className="text-sm text-blue-500 hover:underline"
-              >
-                NOVO CADASTRO
-              </Link>
-            </button>
+            <Link
+              to="/register"
+              className="text-sm text-blue-500 hover:underline"
+            >
+              NOVO CADASTRO
+            </Link>
           </div>
         </form>
         <div className="mt-6 text-center">
