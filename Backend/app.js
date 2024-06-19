@@ -6,8 +6,9 @@ import { config } from "dotenv";
 import bcrypt from "bcrypt";
 
 config();
-
+//Variavel utilizada para a criação da pasta uploads onde armazena o cod das imagens fornecida no registro.
 const upload = multer({ dest: 'uploads/' });
+//Variavel utilizada para a criação do Hash.
 const saltRounds = 10;
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 const port = 8080;
 
+// Conexão com o banco de dados.
 const db = mysql2.createConnection({
     host: process.env.host,
     port: process.env.port,
@@ -23,17 +25,7 @@ const db = mysql2.createConnection({
     database: process.env.database
 });
 
-app.get("/clientes", (req, res) => {
-    db.query("SELECT cpf FROM info_projeto;", (err, results) => {
-        if (err) {
-            console.error("Erro na consulta ao Banco de dados:", err);
-        };
-        return res
-        .status (200)
-        .json(results);
-    });
-});
-
+//Endpoint para conexão com o Dashboard.
 app.post("/login", (req, res) => {
   const { email, senha } = req.body;
   
@@ -68,22 +60,19 @@ app.post("/login", (req, res) => {
   });
 });
 
+//Endpoint para o registro de clientes.
 app.post("/register", upload.single('imagem'), (req, res) => {
   const {
-      rg,
-      cpf,
-      estado,
-      cidade,
-      departamento,
-      areaDatuacao,
+      cpfMat,
+      empresa,
+      programaSetor,
+      responsavel,
+      setor,
       cargo,
-      estadoProjeto,
-      cidadeProjeto,
-      nomeProjeto,
+      quantidadePessoas,
       email,
       senha,
-      nivelEscolaridade,
-      empregabilidade,
+      reSenha,
       imagem
   } = req.body;
 
@@ -92,22 +81,18 @@ app.post("/register", upload.single('imagem'), (req, res) => {
           return res.status(500).json({ message: "Erro ao gerar o hash da senha", error: err });
       }
 
-      const projects = "INSERT INTO info_projeto (`rg`,`cpf`,`estado`,`cidade`,`departamento`,`areaDatuacao`,`cargo`,`estadoProjeto`,`cidadeProjeto`,`nomeProjeto`,`email`,`senha`,`nivelEscolaridade`,`empregabilidade`, `imagem`) VALUES (?)";
+      const projects = "INSERT INTO info_projeto (`cpfMat`,`empresa`,`programaSetor`,`responsavel`,`setor`,`cargo`,`quantidadePessoas`,`email`,`senha`,`reSenha`, `imagem`) VALUES (?)";
       const values = [
-          rg,
-          cpf,
-          estado,
-          cidade,
-          departamento,
-          areaDatuacao,
+          cpfMat,
+          empresa,
+          programaSetor,
+          responsavel,
+          setor,
           cargo,
-          estadoProjeto,
-          cidadeProjeto,
-          nomeProjeto,
+          quantidadePessoas,
           email,
           hash,
-          nivelEscolaridade,
-          empregabilidade,
+          reSenha,
           req.file ? req.file.path : null
       ];
 
@@ -119,6 +104,36 @@ app.post("/register", upload.single('imagem'), (req, res) => {
       });
   });
 });
+
+//Endpoint para obter o resultado da quantidade de pessoas em cada setor.
+app.get('/quantidadePessoas', (req, res) => {
+    const setores = ['Construção Civil', 'Mecânica', 'Comércio', 'Aulas'];
+    
+    const query = `
+      SELECT setor, SUM(quantidadePessoas) AS total
+      FROM info_projeto
+      WHERE setor IN (?)
+      GROUP BY setor
+    `;
+  
+    db.query(query, [setores], (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: 'Erro no servidor', error: err });
+      }
+  
+      // Estrutura para garantir que todos os setores sejam retornados, mesmo que não estejam no banco de dados
+      const quantidadePessoasPorSetor = setores.reduce((acc, setor) => {
+        acc[setor] = 0;
+        return acc;
+      }, {});
+  
+      results.forEach(result => {
+        quantidadePessoasPorSetor[result.setor] = result.total;
+      });
+  
+      return res.json(quantidadePessoasPorSetor);
+    });
+  });
 
 
 app.listen(port, () => {
