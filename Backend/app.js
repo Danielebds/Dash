@@ -8,8 +8,6 @@ import bcrypt from "bcrypt";
 config();
 //Variavel utilizada para a criação da pasta uploads onde armazena o cod das imagens fornecida no registro.
 const upload = multer({ dest: 'uploads/' });
-//Variavel utilizada para a criação do Hash.
-const saltRounds = 10;
 
 const app = express();
 app.use(express.json());
@@ -61,7 +59,7 @@ app.post("/login", (req, res) => {
 });
 
 //Endpoint para o registro de clientes.
-app.post("/register", upload.single('imagem'), (req, res) => {
+app.post("/register", upload.single("imagem"), async (req, res) => {
   const {
       cpfMat,
       empresa,
@@ -72,16 +70,24 @@ app.post("/register", upload.single('imagem'), (req, res) => {
       quantidadePessoas,
       email,
       senha,
-      reSenha,
-      imagem
+      reSenha
   } = req.body;
 
-  bcrypt.hash(senha, saltRounds, (err, hash) => {
-      if (err) {
-          return res.status(500).json({ message: "Erro ao gerar o hash da senha", error: err });
-      }
+  const imagem = req.file ? req.file.path : null;
 
-      const projects = "INSERT INTO info_projeto (`cpfMat`,`empresa`,`programaSetor`,`responsavel`,`setor`,`cargo`,`quantidadePessoas`,`email`,`senha`,`reSenha`, `imagem`) VALUES (?)";
+  console.log("Dados recebidos:", req.body);
+  console.log("Imagem recebida:", req.file);
+
+  if (!cpfMat || !empresa || !programaSetor || !responsavel || !setor || !cargo || !quantidadePessoas || !email || !senha || !reSenha || !imagem) {
+      return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+  }
+
+  if (senha !== reSenha) {
+      return res.status(400).json({ error: "As senhas não coincidem" });
+  }
+
+  try {
+      const hashedPassword = await bcrypt.hash(senha, 10);
       const values = [
           cpfMat,
           empresa,
@@ -91,18 +97,28 @@ app.post("/register", upload.single('imagem'), (req, res) => {
           cargo,
           quantidadePessoas,
           email,
-          hash,
-          reSenha,
-          req.file ? req.file.path : null
+          hashedPassword,
+          imagem
       ];
 
-      db.query(projects, [values], (err, data) => {
-          if (err) {
-              return res.status(500).json({ message: "Erro no servidor", error: err });
+      console.log("Valores para inserção de dados:", values);
+
+      db.query(
+          "INSERT INTO info_projeto (cpfMat, empresa, programaSetor, responsavel, setor, cargo, quantidadePessoas, email, senha, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          values,
+          (err, result) => {
+              if (err) {
+                  console.error("Erro ao inserir dados no banco de dados:", err);
+                  return res.status(500).json({ error: "Erro ao salvar dados" });
+              }
+              console.log("Dados inseridos com sucesso:", result);
+              res.status(201).json({ message: "Projeto Cadastrado" });
           }
-          return res.json("Projeto Cadastrado");
-      });
-  });
+      );
+  } catch (error) {
+      console.error("Erro ao processar solicitação:", error);
+      res.status(500).json({ error: "Erro no servidor" });
+  }
 });
 
 //Endpoint para obter o resultado da quantidade de pessoas em cada setor.
