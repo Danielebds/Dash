@@ -1,35 +1,45 @@
-import React from "react";
-import { AiTwotoneSave } from "react-icons/ai";
-import { PiShareNetworkDuotone } from "react-icons/pi";
-import { IoPrintOutline } from "react-icons/io5";
-import { GrCloudDownload } from "react-icons/gr";
-import { FaBars } from "react-icons/fa";
+import React from 'react';
+import { FaSave, FaCloudUploadAlt, FaPrint, FaShareAlt, FaAdjust } from 'react-icons/fa';
 
-const Header = ({ toggleSidebar }) => {
+const Header = () => {
   return (
-    <header className="bg-black flex justify-between items-center p-4">
-      <div className="flex items-center">
-        <button className="text-white mr-4 md:hidden" onClick={toggleSidebar}>
-          <FaBars />
-        </button>
-        <img src="./assets/simbolo.png" alt="simbolo" className="h-16 mr-4 md:mr-8" />
-        <div className="text-white text-sm">
-          <div><strong className="text-red-700">CLIENTE:</strong> PREFEITURA DE OLINDA</div>
-          <div><strong className="text-red-700">PROGRAMA:</strong> REDE VIVA</div>
-          <div><strong className="text-red-700">RESPONSÁVEL:</strong> CARLOS AUGUSTO</div>
-          <div><strong className="text-red-700">QUANTITATIVO:</strong> 600</div>
+    <nav className="bg-black border-gray-200 px-4 lg:px-6 py-4 dark:bg-gray-800">
+      <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <div className="flex items-center">
+          <a href="#" className="flex items-center">
+            <img src="assets/simbolo.png" className="ml-3 h-10 sm:h-20" alt="Cath Logo" />
+          </a>
+        </div>
+        <div className="flex flex-col text-left text-red-500 font-medium space-y-1">
+          <span>CLIENTE: <strong className='font-medium text-white'>PREFEITURA DE OLINDA</strong></span>
+          <span>PROGRAMA: <strong className='font-medium text-white'>REDE VIVA</strong></span>
+          <span>RESPONSÁVEL: <strong className='font-medium text-white'>CARLOS AUGUSTO</strong></span>
+          <span>QUANTITATIVO: <strong className='font-medium text-white'>600</strong></span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <button className="text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">
+            <FaSave className="w-6 h-6" />
+          </button>
+          <button className="text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">
+            <FaCloudUploadAlt className="w-6 h-6" />
+          </button>
+          <button className="text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">
+            <FaPrint className="w-6 h-6" />
+          </button>
+          <button className="text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">
+            <FaShareAlt className="w-6 h-6" />
+          </button>
+          <button className="text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">
+            <FaAdjust className="w-6 h-6" />
+          </button>
+        </div>
+        <div className="flex items-center">
+          <a href="#" className="flex items-center">
+            <img src="assets/prefeitura.png" className="ml-3 h-10 sm:h-16" alt="Prefeitura de Olinda Logo" />
+          </a>
         </div>
       </div>
-      <div className="flex items-center text-white text-xl space-x-4">
-        <AiTwotoneSave />
-        <PiShareNetworkDuotone />
-        <IoPrintOutline />
-        <GrCloudDownload />
-      </div>
-      <div>
-        <img src="./assets/prefeitura.png" alt="prefeitura" className="h-16 ml-4 md:ml-8" />
-      </div>
-    </header>
+    </nav>
   );
 };
 

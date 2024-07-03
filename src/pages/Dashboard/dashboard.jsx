@@ -1,72 +1,81 @@
-import React, { useState } from "react";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
+import React from "react";
+import Sidebar from "../../components/Sidebar.jsx";
+import Header from "../../components/Header.jsx";
+import Charts from "../../components/Charts.jsx"; // Importa o componente Charts
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="flex-1 flex flex-col">
-        <Header toggleSidebar={toggleSidebar} />
-        <div className="flex-1 p-4 overflow-auto">
-          <hr className="my-4" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-green-500 p-4 shadow-lg">
-              <img src="./assets/engenheiro.png" alt="Construção Civil" className="h-16 mb-2" />
-              <span>CONSTRUÇÃO CIVIL</span>
-              <div>QUANTIDADE: 200</div>
-            </div>
-            <div className="bg-yellow-500 p-4 shadow-lg">
-              <img src="./assets/mecanico.png" alt="Mecânica" className="h-16 mb-2" />
-              <span>MECÂNICA</span>
-              <div>QUANTIDADE: 150</div>
-            </div>
-            <div className="bg-orange-500 p-4 shadow-lg">
-              <img src="./assets/comercio.png" alt="Comércio" className="h-16 mb-2" />
-              <span>COMÉRCIO</span>
-              <div>QUANTIDADE: 150</div>
-            </div>
-            <div className="bg-red-500 p-4 shadow-lg">
-              <img src="./assets/aulas.png" alt="Aulas" className="h-16 mb-2" />
-              <span>AULAS</span>
-              <div>QUANTIDADE: 100</div>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex flex-col flex-grow">
+        <Header />
+        <div className="p-4 grid grid-cols-1 xl:grid-cols-4 gap-4">
+          {/* Box de Construção Civil */}
+          <div className="bg-green-500 p-4 rounded-lg text-black flex flex-col items-center">
+            <img src="/assets/engenheiro.png" alt="Construção Civil" className="w-16 h-16 mb-2" />
+            <h2 className="text-lg font-bold">CONSTRUÇÃO CIVIL</h2>
+            <p className="text-2xl font-bold">QTD: 200</p>
+          </div>
+          {/* Box de Mecânica */}
+          <div className="bg-yellow-500 p-4 rounded-lg text-black flex flex-col items-center">
+            <img src="/assets/mecanico.png" alt="Mecânica" className="w-16 h-16 mb-2" />
+            <h2 className="text-lg font-bold">MECÂNICA</h2>
+            <p className="text-2xl font-bold">QTD: 150</p>
+          </div>
+          {/* Box de Comércio */}
+          <div className="bg-orange-500 p-4 rounded-lg text-black flex flex-col items-center">
+            <img src="/assets/comercio.png" alt="Comércio" className="w-16 h-16 mb-2" />
+            <h2 className="text-lg font-bold">COMÉRCIO</h2>
+            <p className="text-2xl font-bold">QTD: 150</p>
+          </div>
+          {/* Box de Aulas */}
+          <div className="bg-red-500 p-4 rounded-lg text-black flex flex-col items-center">
+            <img src="/assets/aulas.png" alt="Aulas" className="w-16 h-16 mb-2" />
+            <h2 className="text-lg font-bold">AULAS</h2>
+            <p className="text-2xl font-bold">QTD: 100</p>
+          </div>
+        </div>
+        <div className="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Box de Demanda por Habilidade - Sub Áreas */}
+          <div className="bg-white p-4 rounded-lg col-span-1 lg:col-span-2">
+            <h2 className="text-lg text-black font-bold mb-4">DEMANDA POR HABILIDADE - SUB ÁREAS</h2>
+            <div className="w-full h-64">
+              {/* Incluindo o componente Charts dentro do box */}
+              <Charts />
             </div>
           </div>
-          <hr className="my-4" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white p-4 shadow-lg">
-              <h1>DEMANDA POR HABILIDADE: SUB ÁREAS</h1>
-              <div>PEDREIRO</div>
-              <div>ENCANADOR</div>
-              <div>ELETRICISTA</div>
-              <div>LADRILHEIRO</div>
-              <div>AJUDANTE</div>
-              <div>PINTOR</div>
-              <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded">CARREGAR MAIS...</button>
-            </div>
-            <div className="bg-white p-4 shadow-lg">
-              <h1>RECORRÊNCIA DE OPORTUNIDADES</h1>
-              <div>PEDREIRO</div>
-              <div>ENCANADOR</div>
-              <div>AJUDANTE</div>
-              <h1>TAXAS</h1>
-              <span>CANCELAMENTO DE SERVIÇO --------- 12%</span>
-              <br />
-              <span>SATISFAÇÃO DO CLIENTE ---------------- 78%</span>
-              <br />
-              <span>USO DO APLICATIVO CATCH ------------- 12%</span>
+          {/* Box de Mapa de Calor */}
+          <div className="bg-white p-4 rounded-lg lg:row-span-2 lg:col-span-1">
+            <h2 className="text-lg text-black font-bold mb-4">MAPA DE CALOR</h2>
+            <div className="h-96 flex justify-center items-center">
+          
+       
             </div>
           </div>
-          <hr className="my-4" />
-          <div className="bg-white p-4 shadow-lg">
-            <h1>MAPA DE CALOR</h1>
-            <img src="./assets/mapa.png" alt="Mapa de Calor" className="w-full h-64 object-cover" />
+          {/* Box de Recorrência de Oportunidade */}
+          <div className="bg-white p-4 rounded-lg">
+            <h2 className="text-lg text-black font-bold mb-4">RECORRÊNCIA DE OPORTUNIDADE</h2>
+            <div className="h-48 flex justify-center items-center">
+             
+            </div>
+          </div>
+          {/* Box de Taxas */}
+          <div className="bg-white p-4 rounded-lg">
+            <h2 className="text-lg text-black font-bold mb-4">TAXAS</h2>
+            <ul className="list-none text-gray-800">
+              <li className="flex justify-between mb-2">
+                <span>CANCELAMENTO DE SERVIÇO</span>
+                <span className="text-red-500">12%</span>
+              </li>
+              <li className="flex justify-between mb-2">
+                <span>SATISFAÇÃO DO CLIENTE</span>
+               <span className="text-green-500">78%</span>
+              </li>
+              <li className="flex justify-between">
+                <span>USO DO APLICATIVO CATCH</span>
+                <span className="text-blue-500">91%</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -75,4 +84,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

@@ -1,62 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { FaChartLine, FaClock, FaMap, FaUser } from "react-icons/fa";
-import {
-  FaArrowRightFromBracket,
-  FaMessage,
-  FaNoteSticky,
-  FaPhoneVolume,
-  FaTrash,
-} from "react-icons/fa6";
+import { FaUser, FaEnvelope } from 'react-icons/fa';
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = () => {
+  const [image, setImage] = useState('assets/engenheiro.png'); // Caminho padrão para a imagem
+
+  useEffect(() => {
+    // Carregar a imagem salva do local storage ao inicializar
+    const savedImage = localStorage.getItem('uploadedImage');
+    if (savedImage) {
+      setImage(savedImage);
+    }
+  }, []);
+
   return (
-    <div className={`fixed inset-0 z-30 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-200 ease-in-out min-h-screen bg-gray-800 text-white p-4 w-60`}>
-      <button className="md:hidden mb-4 text-white" onClick={toggleSidebar}>
-        ✕
-      </button>
-      <nav className="flex flex-col justify-between h-full">
-        <div className="space-y-4">
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaUser className="mr-3" />
-            <span>Dashboard</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaMap className="mr-3" />
-            <span>Mapa de Calor</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaChartLine className="mr-3" />
-            <span>Estatística</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaNoteSticky className="mr-3" />
-            <span>Relatório</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaClock className="mr-3" />
-            <span>Histórico</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaMessage className="mr-3" />
-            <span>Faq</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaPhoneVolume className="mr-3" />
-            <span>Contato</span>
-          </a>
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaTrash className="mr-3" />
-            <span>Excluir</span>
-          </a>
+    <div className="bg-gray-800 text-white w-64 min-h-screen flex flex-col">
+      <div className="p-4 flex flex-col items-center bg-teal-600">
+        <h1 className="text-xl font-bold mb-2"></h1>
+        {image && <img src={image} alt="" className="w-24 h-24 rounded-full mb-2 border-2 border-white" />}
+        <div className="flex space-x-2 mt-2">
+          
         </div>
-        <div className="mt-4">
-          <a href="#" className="flex items-center h-12 px-4 rounded-lg text-gray-200 hover:bg-gray-700">
-            <FaArrowRightFromBracket className="mr-3" />
-            <Link to="/">SAIR</Link> 
-          </a>
+        <div className="text-center mt-2">
+          <h2 className="text-lg font-semibold">José</h2>
+          <p className="text-sm">Web Developer/Designer</p>
         </div>
+      </div>
+      <nav className="flex flex-col flex-grow p-4">
+        
+        <Link to="#" className="p-2 bg-teal-700 rounded hover:bg-teal-800">Dashboard</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Mapa de Calor</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Estatística</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Relatório</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Histórico</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Faq</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Contato</Link>
+        <Link to="#" className="p-2 hover:bg-gray-700 rounded">Excluir</Link>
       </nav>
+      <Link to="/" className="p-4 bg-red-700 hover:bg-red-600">Sair</Link>
     </div>
   );
 };
