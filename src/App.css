@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+  /* Estilos para o modo escuro */
+  .dark body {
+    background-color: #1a202c; /* ou qualquer cor escura que você preferir */
+    color: white;
+  }
