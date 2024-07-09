@@ -1,16 +1,23 @@
-import { BrowserRouter } from "react-router-dom";
-import RoutesApp from "./routes";
-
-import "./App.css";
+import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import RoutesApp from './routes';
+import './App.css';
 
 function App() {
-  return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
-    <BrowserRouter>
+  useEffect(() => {
+    const theme = localStorage.getItem('theme') || 'light';
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
 
-    
-      <RoutesApp />
-    </BrowserRouter>
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white duration-200">
+      <BrowserRouter>
+        <RoutesApp />
+      </BrowserRouter>
     </div>
   );
 }

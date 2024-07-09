@@ -42,6 +42,7 @@ const HeatMap = () => {
         </MapContainer>
       </div>
     </div>
+    
   );
 };
 

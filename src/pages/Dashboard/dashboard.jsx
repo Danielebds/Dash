@@ -9,6 +9,7 @@ const Dashboard = () => {
   return (
     <div className="flex bg-slate-50 dark:bg-gray-950">
       <Sidebar />
+     
       <div className="flex flex-col flex-grow">
         <Header />
         <div className="p-4 grid grid-cols-1 xl:grid-cols-4 gap-4">
@@ -39,7 +40,7 @@ const Dashboard = () => {
         </div>
         <div className="p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Box de Demanda por Habilidade - Sub Áreas */}
-          <div className="bg-slate-200  dark:bg-blue-950 p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl rounded-lg col-span-1 lg:col-span-2">
+          <div className="bg-slate-200  dark:bg-[#142630] p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl rounded-lg col-span-1 lg:col-span-2">
             <h2 className="text-lg  text-black dark:text-white font-bold mb-4">DEMANDA POR HABILIDADE - SUB ÁREAS</h2>
             <div className="w-full h-64">
               {/* Incluindo o componente Charts dentro do box */}
@@ -47,21 +48,21 @@ const Dashboard = () => {
             </div>
           </div>
           {/* Box de Mapa de Calor */}
-          <div className="bg-slate-200  dark:bg-blue-950 p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg lg:row-span-2 lg:col-span-1">
+          <div className="bg-slate-200  dark:bg-[#142630] p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg lg:row-span-2 lg:col-span-1">
             <h2 className="text-lg text-black dark:text-white font-bold mb-4">MAPA DE CALOR</h2>
             <div className="h-96 flex justify-center items-center">
               <HeatMap />
             </div>
           </div>
           {/* Box de Recorrência de Oportunidade */}
-          <div className="bg-slate-200  dark:bg-blue-950 p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg">
+          <div className="bg-slate-200  dark:bg-[#142630] p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg">
             <h2 className="text-lg text-black dark:text-white font-bold mb-4">RECORRÊNCIA DE OPORTUNIDADE</h2>
             <div className="h-48 flex justify-center items-center">
               <BarChart />
             </div>
           </div>
           {/* Box de Taxas */}
-          <div className="bg-slate-200  dark:bg-blue-950 p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg">
+          <div className="bg-slate-200  dark:bg-[#142630] p-4 shadow-slate-300 dark:shadow-slate-800 shadow-xl p-4 rounded-lg">
             <h2 className="text-lg text-black dark:text-white font-bold mb-4">TAXAS</h2>
             <ul className="list-none text-black dark:text-white">
               <li className="flex justify-between mb-2">

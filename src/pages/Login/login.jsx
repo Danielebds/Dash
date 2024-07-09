@@ -9,12 +9,18 @@ const Login = () => {
   const [password, setPassword] = useState(""); // Estado para armazenar a senha
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
   const [error, setError] = useState(""); // Estado para armazenar mensagens de erro
-  const [scrolledToEnd, setScrolledToEnd] = useState(false); // Estado para verificar se a rolagem atingiu o fim
+  const [termsAccepted, setTermsAccepted] = useState(false); // Estado para verificar se os termos foram aceitos
+  const [showTermsModal, setShowTermsModal] = useState(false); // Estado para controlar a visibilidade do modal de termos
   const navigate = useNavigate(); // Hook para navegação programática
 
   // Função assíncrona para lidar com o login
   const handleLogin = async (event) => {
     event.preventDefault(); // Previne o comportamento padrão do formulário
+
+    if (!termsAccepted) {
+      setShowTermsModal(true); // Exibe o modal de termos se os termos não foram aceitos
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -38,17 +44,9 @@ const Login = () => {
     }
   };
 
-  // Função para lidar com a rolagem na caixa de termos
-  const handleScroll = (e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.target; // Obtém as propriedades de rolagem
-    if (scrollTop + clientHeight >= scrollHeight) {
-      setScrolledToEnd(true); // Define scrolledToEnd como true se a rolagem atingiu o fim
-    }
-  };
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-950 via-blue-500 to-blue-950">
-      <div className="w-full max-w-lg p-8 space-y-4 bg-gradient-to-r from-sky-50 to-slate-50 rounded-lg shadow-2xl border-4 border-blue-700 border-x-blue-90">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#142630] via-cyan-800 to-[#142630]">
+      <div className="w-full max-w-lg p-8 space-y-4 bg-gradient-to-r from-sky-50 to-slate-50 rounded-lg shadow-2xl border-4 border-cyan-950 border-x-blue-90">
         <div className="flex justify-center mb-4">
           <img className="w-50" src="assets/logo.png" alt="Catch Logo" />{" "}
           {/* Exibe o logo */}
@@ -106,7 +104,7 @@ const Login = () => {
           <div className="flex items-center justify-center">
             <Link
               to="/forgot-password"
-              className="text-sm text-blue-950 hover:underline"
+              className="text-sm text-[#142630] hover:underline"
             >
               RECUPERAR SENHA
             </Link>
@@ -122,64 +120,96 @@ const Login = () => {
           <div className="text-center">
             <Link
               to="/register"
-              className="text-sm text-blue-950 hover:underline"
+              className="text-sm text-[#142630] hover:underline"
             >
               NOVO CADASTRO
             </Link>
           </div>
         </form>
-       
-        <div className="flex flex-col items-center p-4 mt-4">
-          <h2 className="text-lg font-bold mb-2 text-black shadow-2xl">
-            Termos de Privacidade
-          </h2>{" "}
-          {/* Título da seção de termos */}
-          <div
-            className="w-full h-64 border p-4 overflow-y-scroll mb-4 bg-white text-black"
-            onScroll={handleScroll} // Chama handleScroll ao rolar
-          >
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-              ac fermentum nisi. Quisque id tortor diam. Sed at vehicula libero.
-              Ut efficitur justo et purus tincidunt, sed convallis lectus
-              mollis. Fusce vel magna aliquam, euismod sapien et, porttitor
-              velit. In posuere ex nec eros cursus, id facilisis lorem
-              ultricies. Phasellus posuere hendrerit metus, ac sagittis est
-              efficitur eu. Duis in urna sit amet libero consectetur sodales.
-              Vivamus volutpat, urna nec suscipit vehicula, elit nisi posuere
-              mi, at elementum mi felis et elit. Quisque viverra nibh et arcu
-              commodo, a tempor metus aliquam.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-              ac fermentum nisi. Quisque id tortor diam. Sed at vehicula libero.
-              Ut efficitur justo et purus tincidunt, sed convallis lectus
-              mollis. Fusce vel magna aliquam, euismod sapien et, porttitor
-              velit. In posuere ex nec eros cursus, id facilisis lorem
-              ultricies. Phasellus posuere hendrerit metus, ac sagittis est
-              efficitur eu. Duis in urna sit amet libero consectetur sodales.
-              Vivamus volutpat, urna nec suscipit vehicula, elit nisi posuere
-              mi, at elementum mi felis et elit. Quisque viverra nibh et arcu
-              commodo, a tempor metus aliquam.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-              ac fermentum nisi. Quisque id tortor diam. Sed at vehicula libero.
-              Ut efficitur justo et purus tincidunt, sed convallis lectus
-              mollis. Fusce vel magna aliquam, euismod sapien et, porttitor
-              velit. In posuere ex nec eros cursus, id facilisis lorem
-              ultricies. Phasellus posuere hendrerit metus, ac sagittis est
-              efficitur eu. Duis in urna sit amet libero consectetur sodales.
-              Vivamus volutpat, urna nec suscipit vehicula, elit nisi posuere
-              mi, at elementum mi felis et elit. Quisque viverra nibh et arcu
-              commodo, a tempor metus aliquam.
-            </p>
-          </div>
-          <button className="bg-blue-950 hover:bg-red-600 text-white px-4 py-2 rounded">
-            Aceitar Termos
-          </button>
-        </div>
       </div>
+
+      {showTermsModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-lg">
+            <h2 className="text-lg font-bold mb-4">Termos de Privacidade</h2>
+            <div className="h-64 overflow-y-scroll mb-4">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Curabitur ac fermentum nisi. Quisque id tortor diam. Sed at
+                vehicula libero. Ut efficitur justo et purus tincidunt, sed
+                convallis lectus mollis. Fusce vel magna aliquam, euismod sapien
+                et, porttitor velit. In posuere ex nec eros cursus, id facilisis
+                lorem ultricies. Phasellus posuere hendrerit metus, ac sagittis
+                est efficitur eu. Duis in urna sit amet libero consectetur
+                sodales. Vivamus volutpat, urna nec suscipit vehicula, elit nisi
+                posuere mi, at elementum mi felis et elit. Quisque viverra nibh
+                et arcu commodo, a tempor metus aliquam.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Curabitur ac fermentum nisi. Quisque id tortor diam. Sed at
+                vehicula libero. Ut efficitur justo et purus tincidunt, sed
+                convallis lectus mollis. Fusce vel magna aliquam, euismod sapien
+                et, porttitor velit. In posuere ex nec eros cursus, id facilisis
+                lorem ultricies. Phasellus posuere hendrerit metus, ac sagittis
+                est efficitur eu. Duis in urna sit amet libero consectetur
+                sodales. Vivamus volutpat, urna nec suscipit vehicula, elit nisi
+                posuere mi, at elementum mi felis et elit. Quisque viverra nibh
+                et arcu commodo, a tempor metus aliquam.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Curabitur ac fermentum nisi. Quisque id tortor diam. Sed at
+                vehicula libero. Ut efficitur justo et purus tincidunt, sed
+                convallis lectus mollis. Fusce vel magna aliquam, euismod sapien
+                et, porttitor velit. In posuere ex nec eros cursus, id facilisis
+                lorem ultricies. Phasellus posuere hendrerit metus, ac sagittis
+                est efficitur eu. Duis in urna sit amet libero consectetur
+                sodales. Vivamus volutpat, urna nec suscipit vehicula, elit nisi
+                posuere mi, at elementum mi felis et elit. Quisque viverra nibh
+                et arcu commodo, a tempor metus aliquam.
+              </p>
+            </div>
+            <div className="flex items-center  mb-4">
+              <input
+                type="checkbox"
+                id="accept-terms"
+                className="mr-2 "
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              />
+              <label htmlFor="accept-terms" className="text-black ">
+                Aceitar Termos
+              </label>
+            </div>
+            <div className="flex justify-between">
+              <button
+                className="bg-[#142630] hover:bg-red-600 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  if (termsAccepted) {
+                    setShowTermsModal(false);
+                    setError(""); // Limpa a mensagem de erro se os termos forem aceitos
+                  } else {
+                    setError("Você deve aceitar os termos de privacidade para continuar.");
+                  }
+                }}
+              >
+                Continuar
+              </button>
+              <button
+                className="bg-[#142630] hover:bg-red-600 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  setShowTermsModal(false);
+                  if (!termsAccepted) {
+                    setError("Você deve aceitar os termos de privacidade para continuar.");
+                  }
+                }}
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

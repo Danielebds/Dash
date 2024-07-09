@@ -4,7 +4,7 @@ import DarkMode from '../components/Darkmode'; // Importa o componente DarkMode
 
 const Header = () => {
   return (
-    <nav className="bg-slate-100 border-red-700 px-4 lg:px-6 py-4 dark:bg-blue-950">
+    <nav className="bg-slate-100 border-red-700 px-4 lg:px-6 py-4 dark:bg-[#142630]">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <div className="flex items-center">
           <a href="#" className="flex items-center">
