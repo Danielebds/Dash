@@ -8,3 +8,24 @@
     background-color: #1a202c; /* ou qualquer cor escura que você preferir */
     color: white;
   }
+  @media print {
+    .print-friendly {
+      display: block !important;
+    }
+  
+    .print-friendly h1, .print-friendly h2, .print-friendly h3, .print-friendly h4, .print-friendly h5, .print-friendly h6 {
+      break-after: avoid !important;
+    }
+  
+    .print-friendly img {
+      max-width: 100% !important;
+    }
+  
+    .print-friendly div, .print-friendly span, .print-friendly p {
+      break-inside: avoid !important;
+    }
+  
+    .hidden-print {
+      display: none !important;
+    }
+  }

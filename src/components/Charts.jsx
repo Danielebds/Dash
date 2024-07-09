@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
+// Dados fictícios iniciais
+const dataInicial = {
+  'Construção Civil': [
+    { name: 'Pedreiro', uv: 4000 },
+    { name: 'Encanador', uv: 3000 },
+    { name: 'Eletricista', uv: 1000 },
+    { name: 'Ladrilheiro', uv: 2780 },
+    { name: 'Ajudante', uv: 1890 },
+    { name: 'Pintor', uv: 2390 },
+  ],
+  'Mecânica': [
+    { name: 'Mecânico A', uv: 3500 },
+    { name: 'Mecânico B', uv: 2500 },
+    { name: 'Mecânico C', uv: 1500 },
+  ],
+  'Comércio': [
+    { name: 'Vendedor', uv: 3000 },
+    { name: 'Caixa', uv: 2000 },
+    { name: 'Estoquista', uv: 1500 },
+  ],
+  'Aulas': [
+    { name: 'Professor de Matemática', uv: 3200 },
+    { name: 'Professor de Português', uv: 2800 },
+    { name: 'Professor de Ciências', uv: 2500 },
+  ],
+};
 
-// Dados do gráfico
-const data = [
-  { name: 'Pedreiro', uv: 4000 },
-  { name: 'Encanador', uv: 3000 },
-  { name: 'Eletricista', uv: 1000 },
-  { name: 'Ladrilheiro', uv: 2780 },
-  { name: 'Ajudante', uv: 1890 },
-  { name: 'Pintor', uv: 2390 },
-];
-
-// Gradientes de cor
 const COLORS = [
   'url(#colorPedreiro)',
   'url(#colorEncanador)',
@@ -20,11 +35,23 @@ const COLORS = [
   'url(#colorLadrilheiro)',
   'url(#colorAjudante)',
   'url(#colorPintor)',
+  'url(#colorVendedor)',
+  'url(#colorCaixa)',
+  'url(#colorEstoquista)',
+  'url(#colorProfessorMatematica)',
+  'url(#colorProfessorPortugues)',
+  'url(#colorProfessorCiencias)',
 ];
 
-const Charts = () => {
+const Charts = ({ selectedArea }) => {
+  const data = dataInicial[selectedArea] || [];
+
+  useEffect(() => {
+    console.log(`Atualizando gráfico para a área: ${selectedArea}`);
+  }, [selectedArea]);
+
   return (
-    <div className="w-full h-64"> {/* Define a altura do contêiner */}
+    <div className="w-full h-64">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <defs>
@@ -51,6 +78,30 @@ const Charts = () => {
             <linearGradient id="colorPintor" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#f97316" stopOpacity={1}/>
               <stop offset="95%" stopColor="#eab308" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorVendedor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#4B0082" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#8A2BE2" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorCaixa" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#FFD700" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#FFA500" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorEstoquista" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#FF4500" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#FF6347" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorProfessorMatematica" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#32CD32" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#7CFC00" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorProfessorPortugues" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#00FA9A" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#ADFF2F" stopOpacity={0.8}/>
+            </linearGradient>
+            <linearGradient id="colorProfessorCiencias" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#4682B4" stopOpacity={1}/>
+              <stop offset="95%" stopColor="#5F9EA0" stopOpacity={0.8}/>
             </linearGradient>
           </defs>
           <XAxis dataKey="name" />
