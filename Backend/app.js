@@ -4,10 +4,23 @@ import cors from "cors";
 import multer from "multer";
 import { config } from "dotenv";
 import bcrypt from "bcrypt";
+import { fileURLToPath } from 'url';
+import path, { dirname } from "path";
 
 config();
-//Variavel utilizada para a criação da pasta uploads onde armazena o cod das imagens fornecida no registro.
-const upload = multer({ dest: 'uploads/' });
+//Constante utilizada para a criação da pasta uploads onde armazena o cod das imagens fornecida no registro.
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    }
+  });
+  
+  const upload = multer({ storage });
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
 
 const app = express();
 app.use(express.json());
@@ -53,7 +66,18 @@ app.post("/login", (req, res) => {
           }
 
           // Login bem-sucedido
-          return res.json({ message: "Login bem-sucedido", user: { id: user.id, email: user.email, nomeProjeto: user.nomeProjeto } });
+          return res.json({ 
+            message: "Login bem-sucedido",
+             user: {
+                 id: user.id,
+                 email: user.email,
+                 empresa: user.empresa,
+                 programaSetor: user.programaSetor,
+                 responsavel: user.responsavel,
+                 quantidadePessoas: user.quantidadePessoas,
+                 imagemUrl: user.imagemUrl ? `http://localhost:${port}/${user.imagemUrl}` : null
+            } 
+        });
       });
   });
 });
@@ -73,12 +97,12 @@ app.post("/register", upload.single("imagem"), async (req, res) => {
       reSenha
   } = req.body;
 
-  const imagem = req.file ? req.file.path : null;
+  const imagemUrl = req.file ? req.file.path : null;
 
   console.log("Dados recebidos:", req.body);
   console.log("Imagem recebida:", req.file);
 
-  if (!cpfMat || !empresa || !programaSetor || !responsavel || !setor || !cargo || !quantidadePessoas || !email || !senha || !reSenha || !imagem) {
+  if (!cpfMat || !empresa || !programaSetor || !responsavel || !setor || !cargo || !quantidadePessoas || !email || !senha || !reSenha || !imagemUrl) {
       return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
@@ -98,13 +122,13 @@ app.post("/register", upload.single("imagem"), async (req, res) => {
           quantidadePessoas,
           email,
           hashedPassword,
-          imagem
+          imagemUrl
       ];
 
       console.log("Valores para inserção de dados:", values);
 
       db.query(
-          "INSERT INTO info_projeto (cpfMat, empresa, programaSetor, responsavel, setor, cargo, quantidadePessoas, email, senha, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO info_projeto (cpfMat, empresa, programaSetor, responsavel, setor, cargo, quantidadePessoas, email, senha, imagemUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
           values,
           (err, result) => {
               if (err) {
@@ -120,6 +144,9 @@ app.post("/register", upload.single("imagem"), async (req, res) => {
       res.status(500).json({ error: "Erro no servidor" });
   }
 });
+
+//Endpoint para entregar arquivos estáticos da pasta 'uploads'
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //Endpoint para obter o resultado da quantidade de pessoas em cada setor.
 app.get('/quantidadePessoas', (req, res) => {

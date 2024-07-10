@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaSave, FaCloudUploadAlt, FaPrint, FaShareAlt } from 'react-icons/fa';
 import DarkMode from '../components/Darkmode'; // Importa o componente DarkMode
 
@@ -6,6 +6,15 @@ const Header = () => {
   const handlePrint = () => {
     window.print();
   };
+
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUserData(user);
+    }
+  }, []);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -44,10 +53,10 @@ const Header = () => {
           </a>
         </div>
         <div className="flex flex-col text-left text-red-500 font-medium space-y-1">
-          <span>CLIENTE: <strong className='dark:text-white text-black'>PREFEITURA DE OLINDA</strong></span>
-          <span>PROGRAMA: <strong className='dark:text-white text-black'>REDE VIVA</strong></span>
-          <span>RESPONSÁVEL: <strong className='dark:text-white text-black'>CARLOS AUGUSTO</strong></span>
-          <span>QUANTITATIVO: <strong className='dark:text-white text-black'>600</strong></span>
+        <span>CLIENTE: <strong className='dark:text-white text-black'>{userData.empresa}</strong></span>
+          <span>PROGRAMA: <strong className='dark:text-white text-black'>{userData.programaSetor}</strong></span>
+          <span>RESPONSÁVEL: <strong className='dark:text-white text-black'>{userData.responsavel}</strong></span>
+          <span>QUANTITATIVO: <strong className='dark:text-white text-black'>{userData.quantidadePessoas}</strong></span>
         </div>
         <div className="flex items-center space-x-2 hidden-print">
           <button onClick={handleSave} className="text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 focus:outline-none">

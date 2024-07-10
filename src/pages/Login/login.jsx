@@ -34,6 +34,8 @@ const Login = () => {
       const data = await response.json(); // Converte a resposta para JSON
 
       if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(data.user)); // Armazena os dados do usuário no localStorage
+        localStorage.setItem('uploadedImageUrl', data.user.imagemUrl); // Armazena a imagem do usuário.
         navigate("/dashboard"); // Redireciona para o dashboard se o login for bem-sucedido
       } else {
         setError(data.message); // Define a mensagem de erro se a resposta não for ok
