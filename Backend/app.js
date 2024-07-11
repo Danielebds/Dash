@@ -25,12 +25,12 @@ const storage = multer.diskStorage({
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = process.env.port || 8080;
+const port = 8080;
 
 // Conexão com o banco de dados.
 const db = mysql2.createConnection({
     host: process.env.host,
-    port: process.env.port2,
+    port: process.env.port,
     user: process.env.user,
     password: process.env.password,
     database: process.env.database
