@@ -18,7 +18,6 @@ const Register = () => {
       senha: '',
       reSenha: '',
       imagem: null,
-      nome: '',
       additionalPrograms: [],
       additionalResponsaveis: [],
     },
@@ -67,7 +66,8 @@ const Register = () => {
   const validateForm = (form) => {
     const newErrors = {};
     if (!form.cpfMat) newErrors.cpfMat = 'Campo obrigatório';
-    if (!form.nome) newErrors.nome = 'Campo obrigatório';
+   
+    
     if (!form.empresa) newErrors.empresa = 'Campo obrigatório';
     if (!form.programaSetor) newErrors.programaSetor = 'Campo obrigatório';
     if (!form.responsavel) newErrors.responsavel = 'Campo obrigatório';
@@ -136,7 +136,6 @@ const Register = () => {
         senha: '',
         reSenha: '',
         imagem: null,
-        nome: '',
         additionalPrograms: [],
         additionalResponsaveis: [],
       },
@@ -161,11 +160,7 @@ const Register = () => {
                 <input type="text" name="cpfMat" id={`cpfMat-${index}`} value={form.cpfMat} onChange={(e) => handleChange(e, index)} className="mt-2 block w-full rounded-md border-0 py-1.5 bg-transparent text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#142630] sm:text-sm sm:leading-6" />
                 {errors[index]?.cpfMat && <p className="text-red-600 text-sm">{errors[index].cpfMat}</p>}
               </div>
-              <div className="sm:col-span-3">
-                <label htmlFor={`nome-${index}`} className="block text-sm font-medium leading-6 text-gray-900">Nome completo<span className="text-red-600">*</span></label>
-                <input type="text" name="nome" id={`nome-${index}`} value={form.nome} onChange={(e) => handleChange(e, index)} className="mt-2 block w-full rounded-md border-0 py-1.5 bg-transparent text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#142630] sm:text-sm sm:leading-6" />
-                {errors[index]?.nome && <p className="text-red-600 text-sm">{errors[index].nome}</p>}
-              </div>
+            
               <div className="sm:col-span-3">
                 <label htmlFor={`empresa-${index}`} className="block text-sm font-medium leading-6 text-gray-900">Empresa ou Órgão Responsável<span className="text-red-600">*</span></label>
                 <input type="text" name="empresa" id={`empresa-${index}`} value={form.empresa} onChange={(e) => handleChange(e, index)} className="mt-2 block w-full rounded-md border-0 py-1.5 bg-transparent text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#142630] sm:text-sm sm:leading-6" />
