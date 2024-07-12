@@ -146,7 +146,7 @@ app.post("/register", upload.single("imagem"), async (req, res) => {
 });
 
 //Endpoint para entregar arquivos estáticos da pasta 'uploads'
-app.use('/uploads', express.static(path.join(__dirname, 'Backend/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 //Endpoint para obter o resultado da quantidade de pessoas em cada setor.
 app.get('/quantidadePessoas', (req, res) => {
