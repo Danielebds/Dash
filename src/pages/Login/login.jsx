@@ -23,7 +23,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch("https://dash-c75m.onrender.com/login", {
         method: "POST", // Define o método HTTP como POST
         headers: {
           "Content-Type": "application/json", // Define o tipo de conteúdo como JSON

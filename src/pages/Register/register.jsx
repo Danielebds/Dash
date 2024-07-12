@@ -105,7 +105,7 @@ const Register = () => {
           formDataToSend.append(`additionalResponsaveis[${index}][responsavel]`, responsavel.responsavel);
         });
 
-        const response = await fetch("http://localhost:8080/register", {
+        const response = await fetch("https://dash-c75m.onrender.com/register", {
           method: "POST",
           body: formDataToSend,
         });
