@@ -75,7 +75,7 @@ app.post("/login", (req, res) => {
                  programaSetor: user.programaSetor,
                  responsavel: user.responsavel,
                  quantidadePessoas: user.quantidadePessoas,
-                 imagemUrl: user.imagemUrl ? `https://dash-c75m.onrender.com/${user.imagemUrl}` : null
+                 imagemUrl: user.imagemUrl ? `https://dash-wal2.onrender.com/${user.imagemUrl}` : null
             } 
         });
       });
