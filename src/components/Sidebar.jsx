@@ -16,6 +16,15 @@ const Sidebar = () => {
     }
   }, []);
 
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUserData(user);
+    }
+  }, []);
+
   return (
     <div className="relative bg-slate-100 text-black  dark:bg-[#142630] dark:text-white w-64 min-h-screen flex flex-col">
       <svg className="absolute inset-0 w-full h-full text-gray-800 dark:text-gray-700" preserveAspectRatio="none" viewBox="0 0 309 800" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ zIndex: '-1' }}>
@@ -26,7 +35,7 @@ const Sidebar = () => {
         <Avatar src={imageUrl || "https://docs.material-tailwind.com/img/face-2.jpg"} alt="avatar" size="xxl" />
         <div className="flex space-x-2 mt-2"></div>
         <div className="text-center mt-2">
-          <h2 className="text-lg font-semibold">José</h2>
+          <h2 className="text-lg font-semibold">{userData.responsavel}</h2>
           <p className="text-sm">Web Developer/Designer</p>
         </div>
       </div>
