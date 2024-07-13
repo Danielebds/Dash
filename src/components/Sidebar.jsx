@@ -32,7 +32,7 @@ const Sidebar = () => {
       </svg>
       <div className="p-4 flex flex-col items-center bg-slate-200 dark:bg-[#142623]">
         <h1 className="text-xl font-bold mb-2"></h1>
-        <Avatar src={imageUrl || "https://docs.material-tailwind.com/img/face-2.jpg"} alt="avatar" size="xxl" />
+        <Avatar src={imageUrl || ""} alt="avatar" size="xxl" />
         <div className="flex space-x-2 mt-2"></div>
         <div className="text-center mt-2">
           <h2 className="text-lg font-semibold">{userData.responsavel}</h2>

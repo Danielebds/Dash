@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: { 
+    browser: true, 
+    node: true, // Adiocionei suporte ao ambiente Node.js
+    es2020: true 
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -18,4 +22,4 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-}
+};
